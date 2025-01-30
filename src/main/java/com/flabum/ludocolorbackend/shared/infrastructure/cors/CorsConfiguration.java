@@ -14,7 +14,8 @@ public class CorsConfiguration {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOriginPatterns("http://localhost:5173",
-                                "https://ludocolor-backend-production.up.railway.app")
+                                "https://ludocolor-backend-production.up.railway.app",
+                                "https://ludocolor-backend-production.up.railway.app/swagger-ui/index.html")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .exposedHeaders("Authorization") // Permite ver el header Authorization en la respuesta
