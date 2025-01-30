@@ -24,8 +24,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     private String name;
 
     @ManyToMany(fetch =  FetchType.EAGER)
