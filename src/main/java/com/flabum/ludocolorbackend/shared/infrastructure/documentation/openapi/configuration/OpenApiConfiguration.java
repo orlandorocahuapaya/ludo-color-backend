@@ -13,13 +13,13 @@ public class OpenApiConfiguration {
     public OpenAPI learningPlatformOpenApi() {
 
         return new OpenAPI()
-                .info(new Info().title("SquidZ Platform API")
+                .info(new Info().title("Ludo Color Platform API")
                         .description(
-                                "SquidZ Platform application REST API documentation.")
+                                "Ludo Color Platform application REST API documentation.")
                         .version("v1.0.0")
                                 .license(new License().name("Apache 2.0").url("https://springdoc.org")))
                         .externalDocs(new ExternalDocumentation()
-                                .description("SquidZ Platform Wiki Documentation")
+                                .description("Ludo Color Platform Wiki Documentation")
                                 .url("https://acme-learning-platform.wiki.github.org/docs"));
 
     }
