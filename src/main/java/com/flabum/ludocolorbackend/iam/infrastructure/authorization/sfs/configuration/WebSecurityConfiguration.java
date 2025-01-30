@@ -70,19 +70,4 @@ public class WebSecurityConfiguration {
                 .addFilterBefore(authorizationRequestFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
-    @Bean
-    public WebMvcConfigurer webMvcConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOriginPatterns("http://localhost:5173",
-                                "https://ludocolor-backend-production.up.railway.app")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
-            }
-        };
-    }
 }
