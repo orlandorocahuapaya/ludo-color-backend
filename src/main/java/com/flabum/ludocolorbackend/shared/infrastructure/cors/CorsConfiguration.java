@@ -13,7 +13,10 @@ public class CorsConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOriginPatterns("*")
+                        .allowedOrigins("http://localhost:5173",
+                                "https://ludocolor-backend-production.up.railway.app",
+                                "capacitor://localhost",
+                                "file://")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .exposedHeaders("Authorization") // Permite ver el header Authorization en la respuesta
