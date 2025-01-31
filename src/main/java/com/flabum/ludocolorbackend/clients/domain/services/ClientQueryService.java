@@ -7,7 +7,7 @@ import com.flabum.ludocolorbackend.clients.domain.model.queries.GetClientByIdQue
 import java.util.List;
 import java.util.Optional;
 
-public interface ClientQueryServices {
+public interface ClientQueryService {
 
     List<Client> getAllClients(GetAllClientsQuery query);
 

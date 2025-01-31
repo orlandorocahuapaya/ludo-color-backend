@@ -3,7 +3,7 @@ package com.flabum.ludocolorbackend.clients.interfaces.rest.client;
 import com.flabum.ludocolorbackend.clients.domain.model.commands.DeleteClientByIdCommand;
 import com.flabum.ludocolorbackend.clients.domain.model.queries.GetAllClientsQuery;
 import com.flabum.ludocolorbackend.clients.domain.services.ClientCommandService;
-import com.flabum.ludocolorbackend.clients.domain.services.ClientQueryServices;
+import com.flabum.ludocolorbackend.clients.domain.services.ClientQueryService;
 import com.flabum.ludocolorbackend.clients.interfaces.rest.client.resources.AddClientResource;
 import com.flabum.ludocolorbackend.clients.interfaces.rest.client.resources.ClientResources;
 import com.flabum.ludocolorbackend.clients.interfaces.rest.client.resources.UpdateClientResource;
@@ -26,7 +26,7 @@ import java.util.List;
 public class ClientController {
 
     private final ClientCommandService clientCommandService;
-    private final ClientQueryServices clientQueryServices;
+    private final ClientQueryService clientQueryService;
 
     @PostMapping("add-client")
     public ResponseEntity<ClientResources> addClient(@RequestBody AddClientResource addClientResource) {
@@ -42,7 +42,7 @@ public class ClientController {
     @GetMapping("get-clients")
     public ResponseEntity<List<ClientResources>> getClients() {
         var getAllClientQuery = new GetAllClientsQuery();
-        var clients = clientQueryServices.getAllClients(getAllClientQuery);
+        var clients = clientQueryService.getAllClients(getAllClientQuery);
         if (clients.isEmpty()){
             return ResponseEntity.notFound().build();
         }

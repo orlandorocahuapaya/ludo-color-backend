@@ -1,0 +1,48 @@
+package com.flabum.ludocolorbackend.employee.application.internal.commandservices;
+
+import com.flabum.ludocolorbackend.employee.domain.model.aggregates.Employee;
+import com.flabum.ludocolorbackend.employee.domain.model.commands.AddEmployeeCommand;
+import com.flabum.ludocolorbackend.employee.domain.model.commands.DeleteEmployeeByIdCommand;
+import com.flabum.ludocolorbackend.employee.domain.model.commands.UpdateEmployeeCommand;
+import com.flabum.ludocolorbackend.employee.domain.service.EmployeeCommandService;
+import com.flabum.ludocolorbackend.employee.infrastructure.persistence.jpa.EmployeeRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@AllArgsConstructor
+@Service
+public class EmployeeCommandServiceImpl implements EmployeeCommandService {
+
+    private final EmployeeRepository employeeRepository;
+
+    @Override
+    public Optional<Employee> execute(AddEmployeeCommand command) {
+        if (employeeRepository.existsByName(command.name())){
+            throw new RuntimeException("Employee name already exists");
+        }
+        var newEmployee = new Employee(command.name(), command.phone());
+        return Optional.of(employeeRepository.save(newEmployee));
+    }
+
+    @Override
+    public boolean execute(DeleteEmployeeByIdCommand commnad) {
+        if (!employeeRepository.existsById(commnad.id())){
+            throw new RuntimeException("Employee id does not exist");
+        }
+        employeeRepository.deleteById(commnad.id());
+        return true;
+    }
+
+    @Override
+    public Optional<Employee> execute(UpdateEmployeeCommand commnad) {
+        var employee = employeeRepository.findById(commnad.id());
+        if (employeeRepository.countByName(commnad.name()) >= 2){
+            throw new RuntimeException("Employee name already exists");
+        }
+        employee.get().setName(commnad.name());
+        employee.get().setPhone(commnad.phone());
+        return Optional.of(employeeRepository.save(employee.get()));
+    }
+}
