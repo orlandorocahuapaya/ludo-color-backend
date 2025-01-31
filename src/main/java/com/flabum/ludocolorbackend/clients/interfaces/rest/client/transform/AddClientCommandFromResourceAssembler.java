@@ -6,6 +6,6 @@ import jakarta.annotation.Resource;
 
 public class AddClientCommandFromResourceAssembler {
     public static AddClientCommnad toCommandFromResource(AddClientResource resource) {
-        return new AddClientCommnad(resource.name(), resource.phone(), resource.point());
+        return new AddClientCommnad(resource.name(), resource.phone(), resource.points());
     }
 }
