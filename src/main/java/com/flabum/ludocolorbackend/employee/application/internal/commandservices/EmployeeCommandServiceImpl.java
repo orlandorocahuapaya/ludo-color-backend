@@ -22,7 +22,7 @@ public class EmployeeCommandServiceImpl implements EmployeeCommandService {
         if (employeeRepository.existsByName(command.name())){
             throw new RuntimeException("Employee name already exists");
         }
-        var newEmployee = new Employee(command.name(), command.phone());
+        var newEmployee = new Employee(command.phone(), command.name());
         return Optional.of(employeeRepository.save(newEmployee));
     }
 
