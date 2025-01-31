@@ -1,12 +1,15 @@
 package com.flabum.ludocolorbackend.clients.interfaces.rest.client;
 
+import com.flabum.ludocolorbackend.clients.domain.model.commands.DeleteClientByIdCommand;
 import com.flabum.ludocolorbackend.clients.domain.model.queries.GetAllClientsQuery;
 import com.flabum.ludocolorbackend.clients.domain.services.ClientCommandService;
 import com.flabum.ludocolorbackend.clients.domain.services.ClientQueryServices;
 import com.flabum.ludocolorbackend.clients.interfaces.rest.client.resources.AddClientResource;
 import com.flabum.ludocolorbackend.clients.interfaces.rest.client.resources.ClientResources;
+import com.flabum.ludocolorbackend.clients.interfaces.rest.client.resources.UpdateClientResource;
 import com.flabum.ludocolorbackend.clients.interfaces.rest.client.transform.AddClientCommandFromResourceAssembler;
 import com.flabum.ludocolorbackend.clients.interfaces.rest.client.transform.ClientResourceFromEntityAssembler;
+import com.flabum.ludocolorbackend.clients.interfaces.rest.client.transform.UpdateClientCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,4 +50,26 @@ public class ClientController {
 
         return ResponseEntity.ok(clientsResource);
     }
+
+    @DeleteMapping("delete-client")
+    public ResponseEntity<Boolean> deleteClient(@RequestParam("id") Long id) {
+        var deleteClientByIdCommand = new DeleteClientByIdCommand(id);
+        var isClientDeleted = clientCommandService.execute(deleteClientByIdCommand);
+        if (!isClientDeleted){
+            throw new RuntimeException("Clint cannot be deleted");
+        }
+        return ResponseEntity.ok(true);
+    }
+
+    @PutMapping("update-client")
+    public ResponseEntity<ClientResources> updateClient(@RequestBody UpdateClientResource updateClientResource) {
+        var updateClientCommand = UpdateClientCommandFromResourceAssembler.toCommandFromResource(updateClientResource);
+        var client = clientCommandService.execute(updateClientCommand);
+        if (client.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        var clientResource = ClientResourceFromEntityAssembler.toResourceFromEntity(client.get());
+        return ResponseEntity.ok(clientResource);
+    }
+
 }

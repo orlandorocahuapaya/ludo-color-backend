@@ -30,11 +30,26 @@ public class ClientCommandServiceImpl implements ClientCommandService {
 
     @Override
     public Optional<Client> execute(UpdateClientCommand command) {
-        return Optional.empty();
+        var client = clientRepository.findById(command.id());
+        if (client.isEmpty()){
+            throw new RuntimeException("Client don't exists with this id");
+        }
+        if (clientRepository.existsByName(command.name())){
+            throw new RuntimeException("You cannot update with this name because a client already exists with this name");
+        }
+        client.get().setName(command.name());
+        client.get().setPhone(command.phone());
+        client.get().setPoints(command.points());
+
+        return Optional.of(clientRepository.save(client.get()));
     }
 
     @Override
     public boolean execute(DeleteClientByIdCommand command) {
-        return false;
+        if(!clientRepository.existsById(command.id())){
+            throw new RuntimeException("Client don't exists with this id");
+        }
+        clientRepository.deleteById(command.id());
+        return true;
     }
 }
