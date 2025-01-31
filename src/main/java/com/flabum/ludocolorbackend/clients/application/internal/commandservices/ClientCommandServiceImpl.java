@@ -34,7 +34,8 @@ public class ClientCommandServiceImpl implements ClientCommandService {
         if (client.isEmpty()){
             throw new RuntimeException("Client don't exists with this id");
         }
-        if (clientRepository.existsByName(command.name())){
+        long count = clientRepository.countByName(command.name());
+        if (count >= 2){
             throw new RuntimeException("You cannot update with this name because a client already exists with this name");
         }
         client.get().setName(command.name());
