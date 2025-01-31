@@ -17,10 +17,7 @@ public class OpenApiConfiguration {
                         .description(
                                 "Ludo Color Platform application REST API documentation.")
                         .version("v1.0.0")
-                                .license(new License().name("Apache 2.0").url("https://springdoc.org")))
-                        .externalDocs(new ExternalDocumentation()
-                                .description("Ludo Color Platform Wiki Documentation")
-                                .url("https://acme-learning-platform.wiki.github.org/docs"));
+                                .license(new License().name("company: Flabum SAC developer: Orlando Arturo Roca Huapaya").url("https://springdoc.org")));
 
     }
 
