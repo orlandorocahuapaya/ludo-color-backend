@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "api/v1/client", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name="Clients", description = "Clients Management Endpoints")
+@CrossOrigin(origins = "*")
 public class ClientController {
 
     private final ClientCommandService clientCommandService;
