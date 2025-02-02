@@ -4,5 +4,5 @@ import com.flabum.ludocolorbackend.clients.interfaces.rest.client.resources.Clie
 
 import java.util.List;
 
-public record SaleResource(ClientResources client, List<OrderResource> orders, String payment_method, String date) {
+public record SaleResource(Long id, ClientResources client, List<OrderResource> orders, String payment_method, String date) {
 }

@@ -24,6 +24,7 @@ public class SaleResourceFromEntityAssembler {
                 ) :
                 new ClientResources(null, "CLIENTE X", null, null);
         return new SaleResource(
+                sale.getId(),
                 clientResource,
                 sale.getOrders().stream().map(order -> OrderResourceFromEntityAssembler.toResourceFromEntity(order)).toList(),
                 sale.getPaymentMethod().toString(),
