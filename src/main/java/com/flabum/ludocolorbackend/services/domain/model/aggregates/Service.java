@@ -1,8 +1,11 @@
 package com.flabum.ludocolorbackend.services.domain.model.aggregates;
 
+import com.flabum.ludocolorbackend.payment.domain.model.aggregates.Order;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +22,9 @@ public class Service {
     private String serviceType;
 
     private Double price;
+
+    @OneToMany(mappedBy = "service")
+    private List<Order> orders;
 
     public Service(String name, String serviceType, Double price) {
         this.name = name;

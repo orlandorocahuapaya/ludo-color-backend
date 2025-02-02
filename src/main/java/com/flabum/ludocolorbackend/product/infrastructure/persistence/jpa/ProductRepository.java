@@ -15,7 +15,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     boolean existsByName(String name);
 
     List<Product> findAll();
-
-    @Query("SELECT COUNT(p) FROM Product p WHERE p.name = :name")
-    long countByName(@Param("name") String name);
 }

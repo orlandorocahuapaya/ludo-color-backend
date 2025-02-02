@@ -1,5 +1,6 @@
 package com.flabum.ludocolorbackend.employee.domain.model.aggregates;
 
+import com.flabum.ludocolorbackend.payment.domain.model.entities.Participation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,11 +19,14 @@ import java.util.Date;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
-    String phone;
+    private String phone;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Participation> participations;
 
     public Employee(String phone, String name) {
         this.phone = phone;

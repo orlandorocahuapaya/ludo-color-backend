@@ -24,6 +24,6 @@ public class ClientQueryServiceImpl implements ClientQueryService {
 
     @Override
     public Optional<Client> getClientById(GetClientByIdQuery query) {
-        return Optional.empty();
+        return query.id() != 0 ? clientRepository.findById(query.id()):Optional.of(new Client("CLIENTE X", null, null)) ;
     }
 }

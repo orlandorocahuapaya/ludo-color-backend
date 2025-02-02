@@ -33,6 +33,17 @@ public class Client {
         this.points = points;
     }
 
+    public Client(Long id, String name, String phone, Integer points) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.points = points;
+    }
+
+    public Client(Long id) {
+        this.id = id;
+    }
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private Date createdAt;

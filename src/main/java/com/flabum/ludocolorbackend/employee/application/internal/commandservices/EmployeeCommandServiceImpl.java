@@ -6,6 +6,10 @@ import com.flabum.ludocolorbackend.employee.domain.model.commands.DeleteEmployee
 import com.flabum.ludocolorbackend.employee.domain.model.commands.UpdateEmployeeCommand;
 import com.flabum.ludocolorbackend.employee.domain.service.EmployeeCommandService;
 import com.flabum.ludocolorbackend.employee.infrastructure.persistence.jpa.EmployeeRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,18 @@ import java.util.Optional;
 public class EmployeeCommandServiceImpl implements EmployeeCommandService {
 
     private final EmployeeRepository employeeRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Transactional
+    public Employee getEmployeeManaged(Long id) {
+        Employee employee = entityManager.find(Employee.class, id);
+        if (employee == null) {
+            throw new EntityNotFoundException("❌ Empleado no encontrado con ID: " + id);
+        }
+        return employee; // Asegura que está en la sesión
+    }
+
 
     @Override
     public Optional<Employee> execute(AddEmployeeCommand command) {
