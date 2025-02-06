@@ -2,7 +2,6 @@ package com.flabum.ludocolorbackend.employee.domain.model.aggregates;
 
 import com.flabum.ludocolorbackend.payment.domain.model.entities.Participation;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,8 +23,8 @@ public class Employee {
     private String name;
 
     private String phone;
-
-    @OneToMany(mappedBy = "employee")
+    
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Participation> participations;
 
     public Employee(String phone, String name) {

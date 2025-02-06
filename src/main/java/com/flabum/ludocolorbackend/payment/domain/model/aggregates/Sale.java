@@ -4,6 +4,8 @@ import com.flabum.ludocolorbackend.clients.domain.model.aggregates.Client;
 import com.flabum.ludocolorbackend.payment.domain.model.valueobject.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,6 +25,7 @@ public class Sale {
 
     @ManyToOne
     @JoinColumn(nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Client client;
 
     @Enumerated(EnumType.STRING)

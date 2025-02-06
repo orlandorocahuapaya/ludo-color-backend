@@ -6,6 +6,7 @@ import com.flabum.ludocolorbackend.clients.domain.model.commands.DeleteClientByI
 import com.flabum.ludocolorbackend.clients.domain.model.commands.UpdateClientCommand;
 import com.flabum.ludocolorbackend.clients.domain.services.ClientCommandService;
 import com.flabum.ludocolorbackend.clients.infrastructure.persistence.jpa.ClientRepository;
+import com.flabum.ludocolorbackend.payment.infrastructure.persistence.jpa.SaleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class ClientCommandServiceImpl implements ClientCommandService {
 
     private final ClientRepository clientRepository;
-
+    private final SaleRepository saleRepository;
 
     @Override
     public Optional<Client> execute(AddClientCommnad commnad) {
@@ -50,6 +51,7 @@ public class ClientCommandServiceImpl implements ClientCommandService {
         if(!clientRepository.existsById(command.id())){
             throw new RuntimeException("Client don't exists with this id");
         }
+        saleRepository.setClientIdNull(command.id());
         clientRepository.deleteById(command.id());
         return true;
     }

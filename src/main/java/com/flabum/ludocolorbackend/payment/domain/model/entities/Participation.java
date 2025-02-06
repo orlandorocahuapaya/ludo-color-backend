@@ -4,6 +4,8 @@ import com.flabum.ludocolorbackend.employee.domain.model.aggregates.Employee;
 import com.flabum.ludocolorbackend.payment.domain.model.aggregates.Order;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Data
 @Entity

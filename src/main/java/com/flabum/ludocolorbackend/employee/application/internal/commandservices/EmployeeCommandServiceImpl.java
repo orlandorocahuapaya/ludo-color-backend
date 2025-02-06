@@ -6,6 +6,7 @@ import com.flabum.ludocolorbackend.employee.domain.model.commands.DeleteEmployee
 import com.flabum.ludocolorbackend.employee.domain.model.commands.UpdateEmployeeCommand;
 import com.flabum.ludocolorbackend.employee.domain.service.EmployeeCommandService;
 import com.flabum.ludocolorbackend.employee.infrastructure.persistence.jpa.EmployeeRepository;
+import com.flabum.ludocolorbackend.payment.infrastructure.persistence.jpa.ParticipationRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
@@ -20,19 +21,8 @@ import java.util.Optional;
 public class EmployeeCommandServiceImpl implements EmployeeCommandService {
 
     private final EmployeeRepository employeeRepository;
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    @Transactional
-    public Employee getEmployeeManaged(Long id) {
-        Employee employee = entityManager.find(Employee.class, id);
-        if (employee == null) {
-            throw new EntityNotFoundException("❌ Empleado no encontrado con ID: " + id);
-        }
-        return employee; // Asegura que está en la sesión
-    }
-
-
+    private final ParticipationRepository participationRepository;
+    
     @Override
     public Optional<Employee> execute(AddEmployeeCommand command) {
         if (employeeRepository.existsByName(command.name())){

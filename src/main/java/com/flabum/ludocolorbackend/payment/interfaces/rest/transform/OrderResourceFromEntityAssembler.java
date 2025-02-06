@@ -19,5 +19,4 @@ public class OrderResourceFromEntityAssembler {
         return new OrderResource(0, order.getName(), order.getAmount(), order.getPrice(), productId, serviceId,
                 participationResources);
     }
-
 }

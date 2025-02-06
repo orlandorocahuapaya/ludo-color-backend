@@ -7,6 +7,8 @@ import com.flabum.ludocolorbackend.product.domain.model.aggregates.Product;
 import com.flabum.ludocolorbackend.services.domain.model.aggregates.Service;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -23,10 +25,12 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Product product;
 
     @ManyToOne
     @JoinColumn(nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Service service;
 
     private String name;

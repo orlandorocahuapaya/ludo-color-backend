@@ -1,12 +1,14 @@
 package com.flabum.ludocolorbackend.product.application.internal.commandservice;
 
 import com.flabum.ludocolorbackend.employee.domain.model.aggregates.Employee;
+import com.flabum.ludocolorbackend.payment.infrastructure.persistence.jpa.OrderRepository;
 import com.flabum.ludocolorbackend.product.domain.model.aggregates.Product;
 import com.flabum.ludocolorbackend.product.domain.model.commands.AddProductCommand;
 import com.flabum.ludocolorbackend.product.domain.model.commands.DeleteProductByIdCommand;
 import com.flabum.ludocolorbackend.product.domain.model.commands.UpdateProductCommand;
 import com.flabum.ludocolorbackend.product.domain.services.ProductCommandService;
 import com.flabum.ludocolorbackend.product.infrastructure.persistence.jpa.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class ProductCommandServiceImpl implements ProductCommandService {
 
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     public Optional<Product> execute(AddProductCommand command) {
@@ -25,10 +28,12 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     }
 
     @Override
+    @Transactional
     public boolean execute(DeleteProductByIdCommand command) {
         if (!productRepository.existsById(command.id())){
             throw new RuntimeException("Product id does not exist");
         }
+        orderRepository.setProductIdNull(command.id());
         productRepository.deleteById(command.id());
         return true;
     }
